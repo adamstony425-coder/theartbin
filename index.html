@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Art Bin — Digital Art Shop</title>
+  <meta name="description" content="The Art Bin — cute stickers, character sheets, dark fantasy art, and whatever else ends up here. Browse our digital product collections." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1a1a2e;
+      --bg2: #16213e;
+      --cream: #f0ead6;
+      --muted: #a09880;
+      --gold: #c9a84c;
+      --gold-light: #e2c97e;
+      --card: #1f2040;
+      --border: #2e2e50;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    /* TEXTURE OVERLAY */
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    /* NAV */
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover { color: var(--cream); }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      z-index: 1;
+      padding: 5rem 1.5rem 4rem;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .hero-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1.2rem;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 5rem);
+      font-weight: 700;
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 1.5rem;
+    }
+
+    .hero-tagline {
+      color: var(--muted);
+      font-size: 1rem;
+      max-width: 480px;
+      margin: 0 auto 2.5rem;
+      line-height: 1.8;
+    }
+
+    .hero-tagline em {
+      color: var(--cream);
+      font-style: normal;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.75rem 2rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    /* COLLECTIONS GRID */
+    .section {
+      position: relative;
+      z-index: 1;
+      padding: 4rem 1.5rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 2.5rem;
+      text-align: center;
+    }
+
+    .collections-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .collection-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      padding: 2rem 1.8rem;
+      text-decoration: none;
+      display: block;
+      transition: border-color 0.2s, transform 0.2s;
+    }
+
+    .collection-card:hover {
+      border-color: var(--gold);
+      transform: translateY(-3px);
+    }
+
+    .card-tag {
+      font-size: 0.65rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .card-title {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.4rem;
+      color: var(--cream);
+      margin-bottom: 0.8rem;
+      line-height: 1.2;
+    }
+
+    .card-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.5rem;
+    }
+
+    .card-cta {
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--gold-light);
+    }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0 1.5rem;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* FOOTER */
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    footer p {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.5rem;
+    }
+
+    footer a {
+      color: var(--gold);
+      text-decoration: none;
+    }
+
+    footer a:hover { color: var(--gold-light); }
+
+    @media (max-width: 480px) {
+      .nav-links { display: none; }
+      .hero { padding: 3.5rem 1.2rem 3rem; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">The Art Bin</a>
+    <ul class="nav-links">
+      <li><a href="crest.html">Crest</a></li>
+      <li><a href="cute.html">Cute</a></li>
+      <li><a href="firstrealm.html">First Realm</a></li>
+      <li><a href="https://payhip.com/TheArtBin" target="_blank">Shop</a></li>
+    </ul>
+  </nav>
+
+  <section class="hero">
+    <p class="hero-eyebrow">Digital Art Shop</p>
+    <h1>The Art Bin</h1>
+    <p class="hero-tagline">
+      The digital equivalent of a garage sale.<br>
+      <em>Cute stickers. Character sheets. Dark fantasy art.</em><br>
+      And whatever else ends up here.
+    </p>
+    <a class="btn" href="https://payhip.com/TheArtBin" target="_blank">Visit the Shop</a>
+  </section>
+
+  <div class="section">
+    <p class="section-label">Browse Collections</p>
+    <div class="collections-grid">
+
+      <a class="collection-card" href="crest.html">
+        <p class="card-tag">Collection 01</p>
+        <h2 class="card-title">The Crest Collection</h2>
+        <p class="card-desc">Premium logos and mascots built for brands that mean business. Dragon emblems, mechanical marks, lion mascots.</p>
+        <span class="card-cta">Browse →</span>
+      </a>
+
+      <a class="collection-card" href="cute.html">
+        <p class="card-tag">Collection 02</p>
+        <h2 class="card-title">The Cute Collection</h2>
+        <p class="card-desc">Cheerful character assets and seasonal sticker packs. Home of Pip the Penguin and friends.</p>
+        <span class="card-cta">Browse →</span>
+      </a>
+
+      <a class="collection-card" href="firstrealm.html">
+        <p class="card-tag">Collection 03</p>
+        <h2 class="card-title">The First Realm</h2>
+        <p class="card-desc">Lore, dark fantasy art, and character sheets from an original universe. Iron Vanguard soldiers, arcane mages, and more.</p>
+        <span class="card-cta">Browse →</span>
+      </a>
+
+    </div>
+  </div>
+
+  <footer>
+    <p>Artwork created using AI image generation tools and refined for commercial use.</p>
+    <p style="margin-top:1rem;"><a href="https://payhip.com/TheArtBin" target="_blank">payhip.com/TheArtBin</a></p>
+  </footer>
+
+</body>
+</html>

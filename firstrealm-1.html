@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The First Realm — The Art Bin</title>
+  <meta name="description" content="Lore, dark fantasy art and character sheets from The First Realm. Iron Vanguard soldiers, Iron Mages, and more." />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700&family=Inter:wght@300;400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #1a1a2e;
+      --bg2: #16213e;
+      --cream: #f0ead6;
+      --muted: #a09880;
+      --gold: #c9a84c;
+      --gold-light: #e2c97e;
+      --card: #1f2040;
+      --border: #2e2e50;
+    }
+
+    body {
+      background-color: var(--bg);
+      color: var(--cream);
+      font-family: 'Inter', sans-serif;
+      font-weight: 300;
+      line-height: 1.7;
+      min-height: 100vh;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+      pointer-events: none;
+      z-index: 0;
+      opacity: 0.4;
+    }
+
+    nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(26, 26, 46, 0.95);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border);
+      padding: 1rem 1.5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--gold);
+      text-decoration: none;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.8rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      transition: color 0.2s;
+    }
+
+    .nav-links a:hover, .nav-links a.active { color: var(--cream); }
+
+    .page-header {
+      position: relative;
+      z-index: 1;
+      padding: 3.5rem 1.5rem 2.5rem;
+      border-bottom: 1px solid var(--border);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .back-link {
+      display: inline-block;
+      font-size: 0.75rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--muted);
+      text-decoration: none;
+      margin-bottom: 1.5rem;
+      transition: color 0.2s;
+    }
+
+    .back-link:hover { color: var(--gold); }
+
+    .page-eyebrow {
+      font-size: 0.7rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 0.8rem;
+    }
+
+    .page-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      color: var(--cream);
+      line-height: 1.1;
+      margin-bottom: 0.8rem;
+    }
+
+    .page-desc {
+      color: var(--muted);
+      font-size: 0.95rem;
+      max-width: 500px;
+    }
+
+    .products {
+      position: relative;
+      z-index: 1;
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 3rem 1.5rem 5rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      overflow: hidden;
+      transition: border-color 0.2s;
+    }
+
+    .product-card:hover { border-color: var(--gold); }
+
+    .product-image {
+      aspect-ratio: 1;
+      overflow: hidden;
+      background: var(--bg2);
+    }
+
+    .product-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.4s;
+    }
+
+    .product-card:hover .product-image img { transform: scale(1.04); }
+
+    .product-info {
+      padding: 2rem 1.8rem;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .product-name {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.5rem;
+      color: var(--cream);
+      margin-bottom: 0.5rem;
+      line-height: 1.2;
+    }
+
+    .product-price {
+      font-size: 1.1rem;
+      color: var(--gold);
+      font-weight: 500;
+      margin-bottom: 0.8rem;
+      letter-spacing: 0.02em;
+    }
+
+    .product-desc {
+      font-size: 0.85rem;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 1.8rem;
+      flex-grow: 1;
+    }
+
+    .btn {
+      display: inline-block;
+      padding: 0.7rem 1.8rem;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      text-decoration: none;
+      font-size: 0.75rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: background 0.2s, color 0.2s;
+      font-family: 'Inter', sans-serif;
+      align-self: flex-start;
+    }
+
+    .btn:hover {
+      background: var(--gold);
+      color: var(--bg);
+    }
+
+    footer {
+      position: relative;
+      z-index: 1;
+      border-top: 1px solid var(--border);
+      padding: 2.5rem 1.5rem;
+      text-align: center;
+    }
+
+    footer p { font-size: 0.8rem; color: var(--muted); margin-bottom: 0.5rem; }
+    footer a { color: var(--gold); text-decoration: none; }
+
+    @media (max-width: 600px) {
+      .product-card { grid-template-columns: 1fr; }
+      .product-image { aspect-ratio: 16/9; }
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <a class="nav-logo" href="index.html">The Art Bin</a>
+    <ul class="nav-links">
+      <li><a href="crest.html">Crest</a></li>
+      <li><a href="cute.html">Cute</a></li>
+      <li><a href="firstrealm.html" class="active">First Realm</a></li>
+      <li><a href="https://payhip.com/TheArtBin" target="_blank">Shop</a></li>
+    </ul>
+  </nav>
+
+  <div class="page-header">
+    <a class="back-link" href="index.html">← All Collections</a>
+    <p class="page-eyebrow">Collection 03</p>
+    <h1 class="page-title">The First Realm</h1>
+    <p class="page-desc">Lore, dark fantasy art, and character sheets from an original universe.</p>
+  </div>
+
+  <div class="products">
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="iron-mages.png" alt="Iron Mages Arcane Caster Pack" />
+      </div>
+      <div class="product-info">
+        <div>
+          <h2 class="product-name">Iron Mages — Arcane Caster Pack</h2>
+          <p class="product-price">$18.00</p>
+          <p class="product-desc">Character art pack featuring the Iron Mages, the arcane operators of The First Realm.</p>
+        </div>
+        <a class="btn" href="https://payhip.com/b/Z2w09" target="_blank">Get It</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="knight-order.jpeg" alt="Iron Vanguard Knight Order" />
+      </div>
+      <div class="product-info">
+        <div>
+          <h2 class="product-name">Iron Vanguard — Knight Order</h2>
+          <p class="product-price">$15.00</p>
+          <p class="product-desc">Elite knight character sheets from the Iron Vanguard's most disciplined unit.</p>
+        </div>
+        <a class="btn" href="https://payhip.com/b/jvcQf" target="_blank">Get It</a>
+      </div>
+    </div>
+
+    <div class="product-card">
+      <div class="product-image">
+        <img src="trooper-corps.jpg" alt="Iron Vanguard Trooper Corps" />
+      </div>
+      <div class="product-info">
+        <div>
+          <h2 class="product-name">Iron Vanguard — Trooper Corps</h2>
+          <p class="product-price">$12.00</p>
+          <p class="product-desc">Front-line soldier character art from the Iron Vanguard's ground forces.</p>
+        </div>
+        <a class="btn" href="https://payhip.com/b/Nw3g9" target="_blank">Get It</a>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <p>Artwork created using AI image generation tools and refined for commercial use.</p>
+    <p style="margin-top:1rem;"><a href="https://payhip.com/TheArtBin" target="_blank">payhip.com/TheArtBin</a></p>
+  </footer>
+
+</body>
+</html>
